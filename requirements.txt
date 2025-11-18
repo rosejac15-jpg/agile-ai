@@ -1,0 +1,2 @@
+fastapi[standard]>=0.121.0
+docling>=2.60.0

@@ -7,21 +7,17 @@ app = FastAPI()
 
 @app.post("/convert")
 async def convert_docx(request: Request):
-    # Read the raw body (binary DOCX file)
     file_content = await request.body()
 
-    # Save to temp file
+
     with tempfile.NamedTemporaryFile(delete=False, suffix=".docx") as temp_input:
         temp_input.write(file_content)
         input_path = temp_input.name
 
-    # Convert using your existing logic
     converter = DocumentConverter()
     result = converter.convert(input_path)
     markdown_content = result.document.export_to_markdown()
 
-    # Clean up temp input file
     os.remove(input_path)
 
     return {"markdown": markdown_content}
-
